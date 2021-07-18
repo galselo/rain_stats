@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import datetime
+from scipy.interpolate import interp2d
 
 # download data at
 # https://cds.climate.copernicus.eu/cdsapp#!/dataset/insitu-gridded-observations-europe?tab=overview
@@ -106,4 +107,13 @@ plt.colorbar()
 plt.scatter(station_lats, station_lons)
 plt.savefig("map.png")
 print("map saved as map.png")
+
+
+# interpolate maximum to find station max
+f = interp2d(lat[(latmin < lat) & (lat < latmax)], lon[(lonmin < lon) & (lon < lonmax)], mx.T)
+print("Max rain station interpolated:")
+for k, v in stations.items():
+  print(k, f(v[0], v[1]))
+
+
 
