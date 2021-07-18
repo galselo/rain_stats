@@ -10,10 +10,10 @@ from scipy.interpolate import interp2d
 
 
 # station names with lat, lon, mm/day
-stations = {"Rheinbach-Todenfeld": [50.6, 6.94, 158.],
-            "Cologne-Stammheim": [51., 7., 154.],
-            "Klein-Altendorf": [50.62, 6.99, 147.],
-            "Kall-Sistig": [50.5, 6.5, 145.]}
+stations = {"Rheinbach-Todenfeld": [50.58, 6.948, 158.],
+            "Cologne-Stammheim": [50.989, 6.978, 154.],
+            "Klein-Altendorf": [50.623, 6.992, 147.],
+            "Kall-Sistig": [50.501, 6.526, 145.]}
 
 # extract data for later use
 station_names = sorted(stations.keys())
