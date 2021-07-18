@@ -35,15 +35,13 @@ lon = np.array(f["longitude"])
 # store year days for specific range (e.g. JAS)
 days = []
 for y in range(1950, 2021):
-  d1 = datetime.date(1950, 1, 1)
+  d1 = datetime.date(1950, 1, 1)  # initial date in the dataset
 
-  d2 = datetime.date(y, 7, 1)
-  d3 = datetime.date(y, 10, 1)
+  d2 = datetime.date(y, 7, 1)  # starting date in the year
+  d3 = datetime.date(y, 10, 1)  # ending date in the year
 
-  #d2 = datetime.date(y, 1, 1)
-  #d3 = datetime.date(y, 12, 31)
-
-  days += range((d2-d1).days, (d3-d1).days)
+  # compute the range from the beginning of the dataset
+  days += range((d2-d1).days, (d3-d1).days+1)
 
 
 # latitude and longitude range
@@ -78,7 +76,7 @@ for i, d in enumerate(tqdm(days)):
   mx = np.maximum(rr, mx)
   mxtot = np.maximum(rrtot, mxtot)
 
-print(np.amax(st), np.amin(st))
+print("maximum precipitation:", np.amax(st))
 
 # flatten data and remove negative data (i.e. no data)
 r = st.flatten()
@@ -96,6 +94,7 @@ for mm in station_mms:
 plt.yscale("log")
 plt.xlabel("mm/24h")
 plt.savefig("hist.png")
+print("histogram saved as hist.png")
 
 
 plt.clf()
@@ -106,4 +105,5 @@ plt.pcolor(xv, yv, mx, cmap="jet")
 plt.colorbar()
 plt.scatter(station_lats, station_lons)
 plt.savefig("map.png")
+print("map saved as map.png")
 
