@@ -36,7 +36,7 @@ lon = np.array(f["longitude"])
 
 # store year days for specific range (e.g. JAS)
 days = []
-for y in range(1950, 1951):
+for y in range(1950, 2021):
   d1 = datetime.date(1950, 1, 1)  # initial date in the dataset
 
   d2 = datetime.date(y, 7, 1)  # starting date in the year
