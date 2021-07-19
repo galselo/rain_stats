@@ -1,3 +1,4 @@
+# WARNING: this code is for reference only, use at your own risk
 from netCDF4 import Dataset
 import numpy as np
 import matplotlib.pyplot as plt
@@ -93,8 +94,9 @@ for mm in station_mms:
 
 # additional stuff
 plt.yscale("log")
-plt.xlabel("mm/24h")
-plt.savefig("hist.png")
+plt.xlabel("mm/%dh" % (ndays*24))
+plt.ylabel("Normalized frequency")
+plt.savefig("hist.png", dpi=180)
 print("histogram saved as hist.png")
 
 
@@ -102,10 +104,17 @@ plt.clf()
 # prepare lat/long grid for map plot
 xv, yv = np.meshgrid(lat[(latmin < lat) & (lat < latmax)], lon[(lonmin < lon) & (lon < lonmax)], indexing="ij")
 
-plt.pcolor(xv, yv, mx, cmap="jet")
+plt.pcolor(xv, yv, mx, cmap="cubehelix")
 plt.colorbar()
-plt.scatter(station_lats, station_lons)
-plt.savefig("map.png")
+plt.scatter(station_lats, station_lons, marker="x", color="w", s=100)
+
+for llt, lln, mm in zip(station_lats, station_lons, station_mms):
+  plt.text(llt, lln+0.2, "%.0f" % mm, color="w", rotation=90, ha="center", va="bottom")
+
+plt.xlabel("Decimal latitude")
+plt.xlabel("Decimal longitude")
+plt.title("Max precipitation 1950-2020, mm/%dh" % (ndays*24))
+plt.savefig("map.png", dpi=180)
 print("map saved as map.png")
 
 
