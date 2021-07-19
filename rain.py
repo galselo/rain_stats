@@ -36,7 +36,7 @@ lon = np.array(f["longitude"])
 
 # store year days for specific range (e.g. JAS)
 days = []
-for y in range(1950, 2021):
+for y in range(1950, 1951):
   d1 = datetime.date(1950, 1, 1)  # initial date in the dataset
 
   d2 = datetime.date(y, 7, 1)  # starting date in the year
@@ -102,16 +102,16 @@ print("histogram saved as hist.png")
 
 plt.clf()
 # prepare lat/long grid for map plot
-xv, yv = np.meshgrid(lat[(latmin < lat) & (lat < latmax)], lon[(lonmin < lon) & (lon < lonmax)], indexing="ij")
+xv, yv = np.meshgrid(lon[(lonmin < lon) & (lon < lonmax)], lat[(latmin < lat) & (lat < latmax)], indexing="ij")
 
-plt.pcolor(xv, yv, mx, cmap="cubehelix")
+plt.pcolor(xv, yv, mx.T, cmap="cubehelix")
 plt.colorbar()
-plt.scatter(station_lats, station_lons, marker="x", color="w", s=100)
+plt.scatter(station_lons, station_lats, marker="x", color="w", s=100)
 
-for llt, lln, mm in zip(station_lats, station_lons, station_mms):
-  plt.text(llt, lln+0.2, "%.0f" % mm, color="w", rotation=90, ha="center", va="bottom")
+for llt, lln, mm in zip(station_lats, station_lons, station_names):
+  plt.text(lln+0.1, llt, mm, color="w", rotation=0, ha="left", va="center")
 
-plt.xlabel("Decimal latitude")
+plt.ylabel("Decimal latitude")
 plt.xlabel("Decimal longitude")
 plt.title("Max precipitation 1950-2020, mm/%dh" % (ndays*24))
 plt.savefig("map.png", dpi=180)
